@@ -7,10 +7,11 @@ class PLAYER:
         self.pos = pygame.Vector2(width, height)
         self.speed = 5 
         self.size = 20  
+        self.player_rect = pygame.Rect(self.pos.x - self.size / 2, self.pos.y - self.size / 2, self.size, self.size)
 
     def draw_player(self, win):
-        player_rect = pygame.Rect(self.pos.x - self.size / 2, self.pos.y - self.size / 2, self.size, self.size)
-        pygame.draw.rect(win, (255, 255, 255), player_rect, 2)
+        self.player_rect = pygame.Rect(self.pos.x - self.size / 2, self.pos.y - self.size / 2, self.size, self.size)
+        pygame.draw.rect(win, (255, 255, 255), self.player_rect, 2)
 
     def movement(self,WIDTH,HEIGHT):
         keys = pygame.key.get_pressed()
@@ -40,5 +41,5 @@ class PLAYER:
             new_pos.y = self.size / 2
         elif new_pos.y > HEIGHT - self.size / 2:
             new_pos.y = HEIGHT - self.size / 2
-\
+        
         self.pos = new_pos
