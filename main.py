@@ -8,23 +8,40 @@ from pygame import Vector2
 from Player_class import PLAYER 
 from Enemy_class import ENEMY
 from reading_and_writing_score import read_highscore,write_highscore
+from main_menu import main_menu
+from LOSE import lose
+
 
 pygame.init()
 
-ENEMY_SPAWN = pygame.USEREVENT
 WIDTH, HEIGHT = 400, 400
 
-enemies = []
+main_menu(WIDTH,HEIGHT)
+
+
+
 win = pygame.display.set_mode((WIDTH,HEIGHT))
 clock = pygame.time.Clock()
-player = PLAYER(WIDTH/2,HEIGHT/2)
 
+enemies = []
+player = PLAYER(WIDTH/2,HEIGHT/2)
 stime = time.time()
 enemy_spawn_time = 2000 
 spawn_timer = 0 
-
 score = 0
 highscore = read_highscore()
+
+def imitialize():
+	global enemies,player,stime,enemy_spawn_time,spawn_timer,score,highscore
+	enemies = []
+	player = PLAYER(WIDTH/2,HEIGHT/2)
+
+	stime = time.time()
+	enemy_spawn_time = 2000 
+	spawn_timer = 0 
+
+	score = 0
+	highscore = read_highscore()
 
 
 def draw_on_screen():
@@ -52,8 +69,8 @@ def spawing_and_collision_with_player():
 				
 				enemies.remove(enemy)
 		if enemy.enemy_rect.colliderect(player.player_rect):
-			pygame.quit()
-			sys.exit()
+			lose(win)
+			imitialize()
 
 def increment_score():
 	global stime,score
@@ -64,6 +81,7 @@ def increment_score():
 
 
 while True:
+
 	spawn_timer += clock.tick(60)
 
 	for ev in pygame.event.get():
@@ -71,12 +89,12 @@ while True:
 			pygame.quit()
 			sys.exit()
 	
-	if spawn_timer > enemy_spawn_time:
+	if spawn_timer > enemy_spawn_time :
 		for i in range(random.choice([1,3,5])):	
 			i = ENEMY()
 			i.generate_pos(WIDTH,HEIGHT)
 			enemies.append(i)
-		enemy_spawn_time = max(enemy_spawn_time-100, 500)
+		enemy_spawn_time = max(enemy_spawn_time-10, 500)
 		spawn_timer = 0
 	
 	increment_score()

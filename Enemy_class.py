@@ -13,7 +13,7 @@ class ENEMY:
 
     def draw_enemy(self, win):
         self.enemy_rect = pygame.Rect(self.pos.x - self.size / 2, self.pos.y - self.size / 2, self.size, self.size)
-        pygame.draw.rect(win, (200, 0,122), self.enemy_rect, 2)
+        pygame.draw.rect(win, (200, 0,122), self.enemy_rect)
 
 
     def generate_pos(self, width, height):
